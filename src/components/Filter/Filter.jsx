@@ -1,16 +1,20 @@
-import React from 'react';
-import css from '../Contacts.module.css';
+import { Input, Label, Text } from './Filter.styled';
+import { setFilter } from 'redux/filterSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilter } from 'redux/selectors';
 
-function Filter({ value, onChange }) {
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(getFilter);
+
   return (
-    <div className={css.filter}>
-      <form>
-        <p className={css.input_title}>Find contacts by name</p>
-        <br />
-        <input type="text" value={value} onChange={onChange} />
-      </form>
-    </div>
+    <Label>
+      <Text> Find contacts by name </Text>
+      <Input
+        type="text"
+        value={filter}
+        onChange={event => dispatch(setFilter(event.target.value.trim()))}
+      />
+    </Label>
   );
-}
-
-export default Filter;
+};
